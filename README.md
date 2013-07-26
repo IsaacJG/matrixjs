@@ -9,4 +9,4 @@ The Matrix written in javascript.
 ## Public Domain
 No license.
 
-[!screenshot](http://puu.sh/3MqS7.png)
+![screenshot](http://puu.sh/3MqS7.png)
