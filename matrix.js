@@ -8,11 +8,11 @@ function init () {
 	canvas.height = window.innerHeight;
 	ctx = canvas.getContext('2d');
 	drawBackground();
-	var letters = generateLetters(500);
+	var letters = generateLetters();
 	setInterval(function () {
 		drawBackground();
 		drawLetters(letters);
-	}, 40);
+	}, 100);
 };
 
 function drawBackground() {
@@ -38,36 +38,33 @@ function getDelta() {
 	return (Math.random()*10)+1;
 }
 
-function generateClist() {
-	var i = Math.random()*10;
-	var clist = [];
-	if (i === 0) i = 1;
-	while (i > 0) {
-		clist.push(getRandomChar());
-		i--;
-	}
-	return clist;
-}
-
-function generateLetters(n) {
+function generateLetters() {
 	var letters = [];
-	for (var i=0; i < n; i++) {
-		var clist = generateClist();
-		letters.push(new Letter(clist, getDelta(), (Math.random()*canvas.width)+1, 20));
+	var x = canvas.width/10;
+	var y = canvas.height/20;
+	for (var i=0; i < x; i++) {
+		for (var j=0; j < y; j++) {
+			letters.push(new Letter(getRandomChar(), getDelta(), i*10, j*20));
+		}
 	}
 	return letters;
 }
 
 function drawLetters(letters) {
 	letters.forEach(function (element, index, array) {
+		if (index < array.length - 1) {
+			element.content = array[index+1].content;
+		} else {
+			element.content = array[0].content;
+		}
 		element.draw(ctx);
 		element.tick();
 	});
 }
 
 var Letter = Class.create({
-	initialize: function(clist, delta, x, y) {
-		this.clist = clist;
+	initialize: function(content, delta, x, y) {
+		this.content = content
 		this.delta = delta
 		this.x = x;
 		this.y = y;
@@ -77,13 +74,14 @@ var Letter = Class.create({
 	draw: function(ctx) {
 		ctx.fillStyle = this.color;
 		ctx.font = 'Bold 12px Arial';
-		for (var i=0; i < this.clist.length; i++) {
-			ctx.fillText(this.clist[i], this.x, this.y+(12*i));
-		}
+		ctx.fillText(this.content, this.x, this.y);
 	},
 	tick: function() {
-		this.y += this.delta;
-		if (this.y >= canvas.height)
-			this.y = 0;
+		var d = Math.random();
+		if (d > .8) {
+			this.content = getRandomChar();
+		} else if (d < .1) {
+			this.content = ' ';
+		}
 	}
 });
