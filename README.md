@@ -11,4 +11,4 @@ This may cause your browser to crash.
 ## Public Domain
 No license.
 
-[!screenshot](http://puu.sh/3UEJQ.png)
+![screenshot](http://puu.sh/3UEJQ.png)
