@@ -73,7 +73,7 @@ var Letter = Class.create({
 	},
 	draw: function(ctx) {
 		ctx.fillStyle = this.color;
-		ctx.font = 'Bold 12px Arial';
+		ctx.font = 'Plain 12px Arial';
 		ctx.fillText(this.content, this.x, this.y);
 	},
 	tick: function() {
